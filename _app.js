@@ -1,4 +1,4 @@
-
+/*
 
 var express = require('express');
 var app = express();
@@ -6,19 +6,11 @@ var engine = require('ejs-locals');
 
 //var database_json = require('./database');
 
-
-
-//everyauth.helpExpress(app);
-
 var settings=require('./settings/'+app.settings.env).settings;
 global.settings=settings;
 
-//social.configAuth(settings.social);
-
 var db=settings.postgres;
 global.conString="tcp://"+db.user+":"+db.password+"@"+db.host+"/"+db.database;
-
-
 
 exports.init = function(port) {
 
@@ -26,7 +18,7 @@ exports.init = function(port) {
 			app.engine('ejs',engine);
 			app.set('views', __dirname + '/views');
 			app.set('view engine', 'ejs');
-			
+
 			 // delete express.bodyParser.parse['multipart/form-data'];
 
 			app.use(express.cookieParser('vortexo13'));
@@ -54,13 +46,14 @@ exports.init = function(port) {
 
 		
 		var server=app.listen(port);
+		app.io = require('socket.io').listen(server);
 
 		console.log("Antytime - Port: %d - %s", server.address().port, app.settings.env);
 
 		return app;
 }
 
-
+*/
 
 /*
 		app.configure('development', function(){

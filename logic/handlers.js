@@ -58,7 +58,7 @@ var addAction=function(action,func) {
 var handleTemplateRequest=function(req,res,next,template) {
 	execTemplate(req,res,template,function(err,html) {
 		if (err) return next(err);
-		console.log("Template: "+template);
+		console.log("Handled Template: "+template);
 		res.format({
 			'text/html': function() {return res.send(html);},
 			'appliation/json': function() {

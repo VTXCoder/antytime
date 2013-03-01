@@ -1,14 +1,52 @@
 
-var app 		= require('./app').init(4000);
 var express 	= require('express');
 var handlers 	= require('./logic/handlers');
 var request		= require('./logic/request');
 var _   		= require('underscore');
+var engine 		= require('ejs-locals');
+
+// Express 3 Framework
+var app = express();
+
+app.configure(function(){
+	app.engine('ejs',engine);
+	app.set('views', __dirname + '/views');
+	app.set('view engine', 'ejs');
+
+	app.use(express.cookieParser('appAntytime'));
+	app.use(express.bodyParser());
+
+	var RedisStore = require('connect-redis')(express);
+	app.use(express.session({ store: new RedisStore }));
+	app.use(express.methodOverride());
+	app.use(express.static(__dirname + '/static'));
+	app.use(express.favicon());
+	app.use(app.router);
+	app.enable("jsonp callback");
+});
+
+// Settings
+var settings	= require('./settings/'+app.settings.env).settings;
+global.settings=settings;
+
+var db=settings.postgres;
+global.conString="tcp://"+db.user+":"+db.password+"@"+db.host+"/"+db.database;
+
+// Start Server
+var port=4000;
+var server=app.listen(port);
+console.log("Antytime - Port: %d - %s", server.address().port, app.settings.env);
+
+// Start Socket IO
+var io = require('socket.io').listen(server);
+console.log("Socket I/O Active");
 
 // Load all the handlers 
-require("fs").readdirSync("./handlers").forEach(function(file) {require("./handlers/" + file);});
+require("fs").readdirSync("./handlers").forEach(function(file) {
+	require("./handlers/" + file);
+	console.log("Initialised Handler: "+file);
+});
 var handleTemplateRequest=handlers.handleTemplateRequest; 
-
 
 // Session Preparation
 app.all('*',function(req,res,next) {
@@ -39,17 +77,18 @@ app.get('/', function(req,res,next) {
 	//console.log(req.user);
 });
 
-
 // Game
 app.get('/game', function(req,res,next) {
 	handleTemplateRequest(req,res,next,"game");
 	//console.log(req.user);
 });
 
+// Page Not Found
 app.get('/*', function(req, res){
     res.render('404.ejs');
 });
 
+// Error handling
 app.use(function(err, req, res, next){
 	console.log(req.path);
   	console.log(err.stack);
