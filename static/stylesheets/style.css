@@ -1,0 +1,133 @@
+ body {
+    padding-bottom: 40px;
+    overflow-y:scroll;
+    max-width:1250px;
+    margin:0 auto;
+ }
+
+.left {float:left;}
+
+.right {float:right;}
+.clear-both,.clear {clear:both;}
+.center {margin:0 auto 0 auto;}
+.test {border:1px solid red;}
+.break {height:20px;}
+.break-top {margin-top:20px;}
+.break-bottom {margin-bottom:20px;}
+.pointer {cursor:pointer;}
+.strong {font-weight:bold;}
+.red {color:red;}
+.text-black {color:#333;}
+ .hidden {
+ 	display:none;
+ }
+
+.validation {
+	display:none;
+}
+
+.errorMessage {
+	display:none;
+}
+
+.photo-thumb {
+	border:1px solid #ddd;
+	width:20px;
+	height:30px;
+}
+.photo-small {
+	border:1px solid #ddd;
+	width:40px;
+	height:60px;
+}
+
+/*
+.photo-medium {
+	border:1px solid #ddd;
+	width:80px;
+	height:120px;
+}
+
+.photo-large {
+	border:1px solid #ddd;
+	width:120px;
+	height:180px;
+}
+*/
+
+
+ li.reputation {
+ 	height:40px;
+
+ }
+
+li.reputation .badge {
+ 	margin-top:10px;
+ 	cursor:pointer;
+}
+
+
+div.signup-social-well {
+
+
+}
+
+div.signup-social-well .social-icons {
+	float:right;
+	padding-right:20px;
+}
+
+div.signup-social-well .social-icons img {
+	cursor:pointer;
+	width:48px;
+	height:48px;
+	
+}
+
+
+div.signup-social-well .signup-social-text {
+	line-height:1.8em;
+}
+
+.well dd {
+	padding-bottom:8px;
+}
+
+.well.lessPadding {
+	padding:8px 3px;
+}
+
+.alert.right {
+	padding-right:14px;
+}
+
+a.brand {color:#7eb081 !important;}
+
+.navbar-inner {
+	border-top-left-radius:0px;
+	-moz-border-top-left-radius:0px;
+	border-top-right-radius:0px;
+	-moz-border-top-right-radius:0px
+}
+
+
+/* Well Customisation */
+
+div .well-topbar {
+	margin:-10px;
+	margin-bottom:10px;
+}
+
+
+div .split-well-top {
+	padding:2px 8px;
+	margin-bottom:0px;
+	-webkit-border-radius:4px 4px 0px 0px;
+	background-color:#ccc;
+	color:#333;
+}
+
+div .split-well-bottom {
+	-webkit-border-radius:0px 0px 4px 4px;
+}
+

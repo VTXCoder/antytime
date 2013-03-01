@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Antytime</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!--
+        <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    -->
+    <link href="/datepicker/css/datepicker.css" rel="stylesheet">
+    
+    <link href="/stylesheets/style.css" rel="stylesheet">
+    
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+
+    <%- blocks.header %>
+    
+  </head>
+
+  <body>
+
+    <%- body -%>
+
+   
+
+    <div id="mainPage" data-page="<%= (typeof(page)!='undefined')?page:'unknown' %>">
+        
+        <% include flash.ejs %>
+
+    </div>
+    <!--
+    <footer>
+	 	<div class="container-fluid break-top">
+	 	<p align="center" style="border-top:1px solid #ddd;padding-top:10px;">
+	 		
+	 		<a href="#">Privacy&nbsp;Policy</a>&nbsp;&nbsp; &nbsp;&nbsp;
+	 		<a href="#">Terms&nbsp;of&nbsp;Service</a>&nbsp; &nbsp;&nbsp;&nbsp;
+	 		<a href="#">Media&nbsp;Enquiries</a>&nbsp;&nbsp; &nbsp;&nbsp;
+            <a href="#">What's&nbsp;New</a>&nbsp;&nbsp; &nbsp;&nbsp;
+	 		<a href="#">Contact Us</a>
+
+	 	</p>
+	 </div>
+	 </footer>
+    -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/javascripts/libs/underscore.min.js"></script>
+    <script src="/javascripts/libs/jquery.ajaxfileuploader.js"></script>
+    
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/datepicker/js/bootstrap-datepicker.js"></script>
+
+    <script src="/javascripts/all.js"></script>
+
+
+  </body>
+</html>
+
+

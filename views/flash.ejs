@@ -1,0 +1,15 @@
+
+<% if (flash.has(req.session)) { %>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<% _.each(flash.get(session),function(f) { %>
+				<div class="alert alert-<%= f.type %>">
+				  <button type="button" class="close" data-dismiss="alert">&times;</button>
+				  <%= f.message %>
+				</div>
+				<% }) %>
+			</div>
+		</div>
+	</div>
+<% } %>

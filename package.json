@@ -1,0 +1,20 @@
+{
+  "name": "antytime",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "3.x",
+    "console-trace": "~0.2.1",
+    "underscore": "~1.4.2",
+    "xregexp": "~2.0.0",
+    "connect-redis": "~1.4.5",
+    "pg": "~0.8.7",
+    "crypto": "0.0.3",
+    "node-uuid": "~1.4.0",
+    "validator": "~0.4.9",
+    "moment": "~1.7.2",
+    "ejs-locals": "~1.0.2"
+  },
+  "engines": {
+    "node": "0.8.x"
+  }
+}
