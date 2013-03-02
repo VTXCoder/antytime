@@ -1,31 +1,27 @@
 
 var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app)
-  , fs = require('fs')
+  , io = require('socket.io').listen(app);
 
 app.listen(4001);
 
-
 function handler (req, res) {
-  
-  fs.readFile(__dirname + '/index.html',
-  
-  function (err, data) {
-    if (err) {
-      res.writeHead(500);
-      return res.end('Error loading index.html');
-    }
-
-    res.writeHead(200);
-    res.end(data);
-  });
-
+  res.writeHead(500);
+  return res.end('No direct access to server.');
 }
+
+
 
 
 io.sockets.on('connection', function (socket) {
 	console.log("Socket connection established");
-  //socket.emit('news', { hello: 'world' });
+
+  	socket.emit('debug', { message: 'Connected' });
+
+  	socket.emit('access-key-request',null,function(data) {
+  		console.log("RECEIVED KEY");
+  		console.log(data);
+  	});
+
   //socket.on('my other event', function (data) {
   //  console.log(data);
   //});

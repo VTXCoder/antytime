@@ -152,6 +152,24 @@ Can different grids be served by different instances? scalable
 
 Version check between client and server
 
+----------------------------------------------------------------------------
+
+VTX-Matrix-Server
+
+A single instance could support multiple matrix. 
+
+Only 1 instance can be serving a specific matrix at any given time. 
+
+Game > Matrix
+
+All matrix data must be constantly backed up to Redis?
+
+
+-
+
+Matrix		InstanceID 
+
+
 
 
 
