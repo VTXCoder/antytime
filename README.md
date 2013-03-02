@@ -93,3 +93,76 @@ http://www.xiconeditor.com/
 http://creativejs.com/2012/01/day-10-drawing-rotated-images-into-canvas/
 
 http://findicons.com/search/ant
+
+http://developer.apple.com/library/safari/#documentation/AudioVideo/Conceptual/HTML-canvas-guide/AnimatingtheCanvas/AnimatingtheCanvas.html
+
+---------
+
+
+To connect to the game server the user must use a gamekey which is temporarily given to them after they login to the website. 
+
+
+
+The client must connect to a specific grid. 
+
+Grids have names.
+
+
+Request a grid.. (later need to check that you have access to the grid)
+
+Your client will be linked to the grid and receive grid updates.
+
+------------
+
+All commands on a specific grid are sequential...
+
+	ant_3873 move to x98 y22
+
+
+
+connect-grid   {name:'test'}
+
+-----------------------
+
+All grids process every second minimum..
+
+	Any visual changes are sent to any connected clients
+
+
+Server side grid representation
+
+- What is where and what are the objects doing
+
+
+
+Ant_837833
+
+	Grid: Test
+	posX:
+	posY:
+	state:
+
+	actionQueue
+
+Use redis for objects?
+
+What stays in memory
+
+Can different grids be served by different instances? scalable
+
+Version check between client and server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

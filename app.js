@@ -38,8 +38,27 @@ var server=app.listen(port);
 console.log("Antytime - Port: %d - %s", server.address().port, app.settings.env);
 
 // Start Socket IO
+
 var io = require('socket.io').listen(server);
 console.log("Socket I/O Active");
+
+/*
+io.sockets.on('connection', function (socket) {
+	
+	console.log("Game Socket Connected");
+
+	socket.on('login',function(data) {
+
+
+
+	});
+
+  //socket.emit('news', { hello: 'world' });
+  //socket.on('my other event', function (data) {
+  //  console.log(data);
+  //});
+});
+*/
 
 // Load all the handlers 
 require("fs").readdirSync("./handlers").forEach(function(file) {

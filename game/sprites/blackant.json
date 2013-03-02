@@ -1,0 +1,9 @@
+
+{
+	"type":"blackant",
+	"width":2,
+	"height":3,
+	"icon":"blackant",
+	"states":["idle","walking","dead"]
+}
+
