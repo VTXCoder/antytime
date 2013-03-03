@@ -15,12 +15,24 @@ function handler (req, res) {
 io.sockets.on('connection', function (socket) {
 	console.log("Socket connection established");
 
-  	socket.emit('debug', { message: 'Connected' });
+  	//socket.emit('debug', { message: 'Connected' });
 
   	socket.emit('access-key-request',null,function(data) {
-  		console.log("RECEIVED KEY");
-  		console.log(data);
+  		console.log("Checking Gamekey: "+data);
+
+  		if (true) {
+  			
+  			socket.on("request-matrix-data",function(data,fn) {
+  				fn({name:'test',width:'50',height:'50'});
+  			});
+ 
+
+
+  			socket.emit("access-granted");
+  		}
   	});
+
+
 
   //socket.on('my other event', function (data) {
   //  console.log(data);
