@@ -1,3 +1,11 @@
+/*
+
+  A game server will control one or more grids. 
+
+  Each grid is iterating - but not necessarily at the same point in time
+  There is a maximum iteration speed (10 its / second)
+
+*/
 
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app);
@@ -10,8 +18,6 @@ function handler (req, res) {
 }
 
 
-
-
 io.sockets.on('connection', function (socket) {
 	console.log("Socket connection established");
 
@@ -22,11 +28,10 @@ io.sockets.on('connection', function (socket) {
 
   		if (true) {
   			
-  			socket.on("request-matrix-data",function(data,fn) {
-  				fn({name:'test',width:'50',height:'50'});
+  			socket.on("request-matrix-data",function(name,fn) {
+          var gridData=require('./game/grids/'+name);
+  				fn(gridData);
   			});
- 
-
 
   			socket.emit("access-granted");
   		}
@@ -34,6 +39,8 @@ io.sockets.on('connection', function (socket) {
 
 
 
+
+ 
   //socket.on('my other event', function (data) {
   //  console.log(data);
   //});

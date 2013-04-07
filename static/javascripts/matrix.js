@@ -1,10 +1,9 @@
 
 
 var matrixObject=function() {
-
 	this.$c=null;
 	//this.posSize=0;
-	this.squareSize=20;
+	this.squareSize=10;
 
 	// Matrix will be downloaded and created
 	this.create=function(name) {
@@ -13,7 +12,7 @@ var matrixObject=function() {
 			console.log("Matrix Received");
 			console.log(data);
 			game.matrix.init(data);
-			game.matrix.showGrid();
+			//game.matrix.showGrid();
 			//game.matrix.showGridPositions();
 			//game.matrix.createSprite("ant","anty",20,20);
 		});
@@ -30,9 +29,9 @@ var matrixObject=function() {
 		$("#game").append(this.$c);
 
 		// Draw the main rectangle
-		this.$c.drawRect({
+		this.$c.drawImage({
 		  layer:true,
-		  fillStyle: "#fff",
+		  source: "/game/bg/"+data.bg,
 		  x: 0, y: 0,
 		  width: (data.width*this.squareSize),
 		  height: (data.height*this.squareSize),

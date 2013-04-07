@@ -171,10 +171,56 @@ Matrix		InstanceID
 
 
 
+************************************************************************************************
+
+Objects
+
+Fixed - defined with grid
+	Features		(Logs, Leaves, Holes etc)
+	Connections		(If on a connection you can travel through)
+					(Ants will not travel into a connection unless that is their destination)
+	Obstructions    (Ants can't travel over obstructions)
+	Pathways		(Ants will preferably travel along pathways)
+
+Dynamic - always changing
+	Creatures
+	Treasures
+
+Creatures
+
+	State
+
+		- Idle
+		- Wondering
+		- Going to place
+		- Following
+
+Connections
+
+	"Go here"
+	"Go to next area"
+	"Go down into the undergrowth"
+	"Climb up the tree"
+
+Left click for commands 
+
+------------------------------------------------------
+grids
+
+grid.test.iteration
+
+grid.test.commandqueue[..]
 
 
 
 
+grid.test.creatures
+
+creature.8637826
+	{.grid=test
+	.x=
+	.y=
+	.state}
 
 
 

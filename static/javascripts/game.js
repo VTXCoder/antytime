@@ -7,6 +7,16 @@ game.matrix
 game.server
 game.avatar
 
+Each command must increment from the last one... 
+
+If any are skipped then disconnect.
+
+Once a matrix is created then we need to... 
+
+reset to current state
+
+
+
 */
 
 
@@ -31,9 +41,10 @@ $(function() {
 		console.log("Connected");
 
 		// Create the test matrix
-		game.matrix.create("test");
-
+		game.matrix.create("DeadLeaves-1x1");
 	});
+
+
 
 
 	//var s=new server("http://localhost:4001");
