@@ -28,7 +28,7 @@ var matrixObject=function() {
 		$("#game").html("");
 		$("#game").append(this.$c);
 
-		// Draw the main rectangle
+		// Draw the background
 		this.$c.drawImage({
 		  layer:true,
 		  source: "/game/bg/"+data.bg,
@@ -36,21 +36,43 @@ var matrixObject=function() {
 		  width: (data.width*this.squareSize),
 		  height: (data.height*this.squareSize),
 		  fromCenter: false,
-		  mousemove: function(layer) {
-		  	var dx, dy;
-    		dx = layer.eventX - layer.x;
-    		dy = layer.eventY - layer.y;
-    		posX=Math.ceil(dx/self.squareSize);
-    		posY=Math.ceil(dy/self.squareSize);
-    		
-    		console.log("pos:" +dx+"/"+dy+" ("+posX+"/"+posY+")");
-		  }
+		  //mousemove: function(layer) {
+		  	//var dx, dy;
+    		//dx = layer.eventX - layer.x;
+    		//dy = layer.eventY - layer.y;
+    		//posX=Math.ceil(dx/self.squareSize);
+    		//posY=Math.ceil(dy/self.squareSize);
+    		//self.showGridPosition(posX,posY);
+    		//console.log("pos:" +dx+"/"+dy+" ("+posX+"/"+posY+")");
+		  //}
+		});
+
+		// Process the features
+		if (data.features) {
+			_.each(data.features,function(feature) {
+				console.log(feature);
+				game.feature.create(feature);
+			});
+		}
+
+
+
+	};
+
+	this.drawFeature=function(file,x,y) {
+		// Draw the feature
+		this.$c.drawImage({
+		  layer:true,
+		  source: file,
+		  x: x*this.squareSize, y: y*this.squareSize,
+		  //width: (data.width*this.squareSize),
+		  //height: (data.height*this.squareSize),
+		  fromCenter: false
 		});
 	};
 
-
-
-	this.showGridPositions=function() {
+	this.showGridPosition=function(x,y) {
+		$("#position").html(x+" "+y);
 		//this.$c.on("mouseover",function() {
 		//	console.log("over");
 		//});

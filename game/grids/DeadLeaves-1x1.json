@@ -4,7 +4,18 @@
 	"description":"This grid is just for testing on.",
 	"width":75,
 	"height":75,
-	"bg":"DeadLeaves75x75.jpg"
+	"bg":"DeadLeaves75x75.jpg",
+	"features":
+	[
+		{
+			"type":"GreenLeaf",
+			"position":"11/63"
+		},
+		{
+			"type":"GreenLeaf",
+			"position":"15/53"
+		}
+	]
 }
 
 

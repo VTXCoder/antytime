@@ -34,11 +34,12 @@ $(function() {
 	game.matrix=new matrixObject();
 	game.server=new serverObject(game.settings.serverHost);
 	game.avatar=new avatarObject();
+	game.feature=new featureObject();
 	game.server.connect("testkey123");
 
 	// When the server is connected request the grid data
 	$(game).on("server-connected",function() {
-		console.log("Connected");
+		//console.log("Connected");
 
 		// Create the test matrix
 		game.matrix.create("DeadLeaves-1x1");

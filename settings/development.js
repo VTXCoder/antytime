@@ -16,7 +16,9 @@ exports.settings={
       	password: "antytime",
       	host: "localhost",
       	database: "antytime"
-	}
+	},
+
+	cdn: "/game/"
 
 }
 

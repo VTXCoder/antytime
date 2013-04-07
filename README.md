@@ -181,10 +181,13 @@ Fixed - defined with grid
 					(Ants will not travel into a connection unless that is their destination)
 	Obstructions    (Ants can't travel over obstructions)
 	Pathways		(Ants will preferably travel along pathways)
+	Feeding			(Feeding area - when food is available)
 
 Dynamic - always changing
 	Creatures
 	Treasures
+	Food
+
 
 Creatures
 
@@ -223,8 +226,11 @@ creature.8637826
 	.state}
 
 
+--------------------------
 
+Feeding Area
 
+	
 
 
 

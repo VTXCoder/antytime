@@ -12,8 +12,10 @@ var serverObject=function(host) {
 		this.socket=io.connect(this.host);
 		this.socket.on("access-key-request",function(data,fn) {fn(gamekey)});
 		this.socket.on("access-granted",function() {
-			this.status="connected";
-			$(game).trigger("server-connected");
+			if (this.status!="connected") {
+				this.status="connected";
+				$(game).trigger("server-connected");
+			}
 		});
 	};
 
@@ -22,5 +24,12 @@ var serverObject=function(host) {
 			cb(data);
 		});
 	};
+
+	this.getFeature=function(type,cb) {
+		this.socket.emit("get-feature",type,function(data) {
+			
+			cb(data);
+		});
+	}
 
 }
