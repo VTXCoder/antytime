@@ -19,15 +19,15 @@ var serverObject=function(host) {
 		});
 	};
 
-	this.getMatrix=function(name,cb) {
-		this.socket.emit("request-matrix-data",name,function(data) {
+	this.getGrid=function(name,cb) {
+		this.socket.emit("request-grid-data",name,function(data) {
 			cb(data);
 		});
 	};
 
 	this.getFeature=function(type,cb) {
 		this.socket.emit("get-feature",type,function(data) {
-			
+
 			cb(data);
 		});
 	}

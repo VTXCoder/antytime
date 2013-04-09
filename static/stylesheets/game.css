@@ -1,5 +1,16 @@
 
-#canvas {
-	background-color:#efe;
-	border:5px solid #555;
+#grid {
+	position:absolute;
+	top:0;left:0;
+	background-color:#ddd;
+	width:0;height:0;
+	background-repeat:no-repeat;
+	background-size:100% 100%;
+}
+
+#panel {
+	position:absolute;
+	top:0;left:0;
+	background-color:#aaa;
+	width:0;height:0;
 }

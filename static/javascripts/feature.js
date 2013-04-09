@@ -16,8 +16,8 @@ var featureObject=function() {
 	};
 
 	this.draw=function(feature) {
-		console.log("Drawing Feature: "+this.featureCache[feature.type].fullfile);
-		game.matrix.drawFeature(this.featureCache[feature.type].fullfile,feature.position.split("/")[0],feature.position.split("/")[1]);
+		console.log("Drawing Feature: "+this.featureCache[feature.type].fullfile+" "+feature.rotate);
+		game.matrix.drawFeature(this.featureCache[feature.type].fullfile,feature.position.split("/")[0],feature.position.split("/")[1],feature.rotate);
 	};
 
 	_.bindAll();

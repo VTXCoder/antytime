@@ -1,9 +1,28 @@
 
+// Objects need to be rendered sequentially
+// So use a command queue
+// command, parameters
 
 var matrixObject=function() {
 	this.$c=null;
-	//this.posSize=0;
 	this.squareSize=10;
+	this.cmd=[];
+	this.processing=false;
+
+	this.render=function(c,p) {
+		this.cmd.push({c:c,p:p});
+		if (!this.processing) {this.processing=true;this.process()};
+	}; 
+
+	this.process=function() {
+		this.processing=true;
+		if (this.cmd.length) {
+			var c=this.cmd.shift();
+			window.game.matrix.$c[c.c](c.p);
+		}
+		if (this.cmd.length) this.process();
+		this.processing=false;
+	};
 
 	// Matrix will be downloaded and created
 	this.create=function(name) {
@@ -29,6 +48,16 @@ var matrixObject=function() {
 		$("#game").append(this.$c);
 
 		// Draw the background
+		this.render("drawImage",{
+			layer:true,
+		  	source: "/game/bg/"+data.bg,
+		  	x: 0, y: 0,
+		  	width: (data.width*this.squareSize),
+		  	height: (data.height*this.squareSize),
+		  	fromCenter: false
+		});
+
+		/*
 		this.$c.drawImage({
 		  layer:true,
 		  source: "/game/bg/"+data.bg,
@@ -46,6 +75,7 @@ var matrixObject=function() {
     		//console.log("pos:" +dx+"/"+dy+" ("+posX+"/"+posY+")");
 		  //}
 		});
+		*/
 
 		// Process the features
 		if (data.features) {
@@ -59,16 +89,17 @@ var matrixObject=function() {
 
 	};
 
-	this.drawFeature=function(file,x,y) {
+	this.drawFeature=function(file,x,y,rotation) {
 		// Draw the feature
-		this.$c.drawImage({
+		if (!rotation) rotation=0;
+		//this.render("drawLayers");
+		this.render("drawImage",{
 		  layer:true,
 		  source: file,
 		  x: x*this.squareSize, y: y*this.squareSize,
-		  //width: (data.width*this.squareSize),
-		  //height: (data.height*this.squareSize),
-		  fromCenter: false
+		  rotate:rotation
 		});
+		//this.render("restoreCanvas");
 	};
 
 	this.showGridPosition=function(x,y) {

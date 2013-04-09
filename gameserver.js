@@ -33,8 +33,9 @@ io.sockets.on('connection', function (socket) {
 
   		if (true) {
   			
-  			socket.on("request-matrix-data",function(name,fn) {
+  			socket.on("request-grid-data",function(name,fn) {
           var d=require('./game/grids/'+name);
+          d.fullbg=global.settings.cdn+"bg/"+d.bg;
   				fn(d);
   			});
 

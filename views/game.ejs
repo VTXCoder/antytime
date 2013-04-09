@@ -1,25 +1,22 @@
 <% layout('layout.ejs') -%>
-<% script('https://raw.github.com/caleb531/jcanvas/master/jcanvas.min.js') -%>
+<% script('/javascripts/libs/jcanvas.min.js') -%>
 <% script('/socket.io/socket.io.js') -%>
 <% script('/javascripts/server.js') -%>
 <% script('/javascripts/game.js') -%>
 <% script('/javascripts/server.js') -%>
-<% script('/javascripts/matrix.js') -%>
+<% script('/javascripts/grid.js') -%>
 <% script('/javascripts/avatar.js') -%>
 <% script('/javascripts/feature.js') -%>
 <% stylesheet('/stylesheets/game.css') -%>
 
-<br>
 
-<div class="right" style="margin-right:20px;">
-<div id="position"></div>
-</div>
+<div id="grid"></div>
+<div id="panel"></div>
 
-<div id="game"></div>
-
+<!--
 <br><br>
 
 <img src="/images/sprites/ant1.png"  id="icon_ant">
 <img src="/images/sprites/ant1.png"  id="icon_ant_walking_1">
 <img src="/images/sprites/ant1s.png" id="icon_ant_walking_2">
-
+-->
