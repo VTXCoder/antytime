@@ -6,6 +6,13 @@
 	width:0;height:0;
 	background-repeat:no-repeat;
 	background-size:100% 100%;
+	cursor:pointer;
+	overflow:hidden;
+}
+
+.gridlines {
+	position:absolute;
+	background-color:#333;
 }
 
 #panel {
@@ -13,4 +20,15 @@
 	top:0;left:0;
 	background-color:#aaa;
 	width:0;height:0;
+}
+
+.hoverCell {
+	position:absolute;
+	background-color:#fff;
+	opacity: .3;
+}
+
+.feature {
+	position:absolute;
+
 }

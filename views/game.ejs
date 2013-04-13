@@ -1,5 +1,5 @@
 <% layout('layout.ejs') -%>
-<% script('/javascripts/libs/jcanvas.min.js') -%>
+<% script('/javascripts/libs/jQueryRotate.min.js') -%>
 <% script('/socket.io/socket.io.js') -%>
 <% script('/javascripts/server.js') -%>
 <% script('/javascripts/game.js') -%>
@@ -11,7 +11,9 @@
 
 
 <div id="grid"></div>
-<div id="panel"></div>
+<div id="panel">
+<div id="position"></div>
+</div>
 
 <!--
 <br><br>

@@ -22,6 +22,9 @@ function handler (req, res) {
   return res.end('No direct access to server.');
 }
 
+// Need to figure out which grid to manage
+var Grids=["DeadLeaves-1x1"];
+
 
 io.sockets.on('connection', function (socket) {
 	console.log("Socket connection established");
@@ -31,12 +34,20 @@ io.sockets.on('connection', function (socket) {
   	socket.emit('access-key-request',null,function(data) {
   		console.log("Checking Gamekey: "+data);
 
-  		if (true) {
+  		if (data=="testkey123") {
   			
-  			socket.on("request-grid-data",function(name,fn) {
-          var d=require('./game/grids/'+name);
-          d.fullbg=global.settings.cdn+"bg/"+d.bg;
-  				fn(d);
+        socket.on("set-gridname",function(name,fn) {
+          socket.set("gridName",name,function() {
+            fn({ok:true});
+          });
+        });
+
+  			socket.on("request-grid-data",function(fn) {
+          socket.get("gridName",function(err,name) {
+            var d=require('./game/grids/'+name);
+            d.fullbg=global.settings.cdn+"bg/"+d.bg;
+    				fn(d);
+          });
   			});
 
         socket.on("get-feature",function(type,fn) {
@@ -45,8 +56,13 @@ io.sockets.on('connection', function (socket) {
           fn(d);
         });
 
+
+
   			socket.emit("access-granted");
-  		}
+  		} else {
+        socket.emit("access-failed");
+      }
+
   	});
 
 

@@ -39,6 +39,8 @@ $(function() {
 	game.avatar=new avatarObject();
 	game.feature=new featureObject();
 
+	var gridName="DeadLeaves-1x1";
+
 	// Initialise the layout
 	game.layout.init();
 
@@ -46,49 +48,56 @@ $(function() {
 
 	// When the server is connected request the grid data
 	$(game).on("server-connected",function() {
-		game.grid.create("DeadLeaves-1x1");
+
+		game.server.setGridName(gridName,function(data) {
+			console.log("Set grid to "+gridName+" "+data.ok);
+			// should make sure we can access that grid here
+			if (data.ok) {
+				game.grid.create();
+			}
+		});
+
+		
 	});
-	
+
+	$(game).on("access-failed",function() {
+		alert("ACCESS FAILED");
+	});
+
+	$(game).on("grid-initialised",function() {
+		console.log("Grid Initialised");
 
 
 
-	//var s=new server("http://localhost:4001");
-	
-
-
-	//G=new game();
-	//G.init();
-	//G.showGrid();
-
-	//spriteAnt=G.createSprite("ant","ant1",3,3);
-	//spriteAnt2=G.createSprite("ant","ant2",20,20);
-
-	//spriteAnt.changeState("walking");
-	//spriteAnt2.changeState("walking");
+	});
 
 });
+
+
 
 var layoutObject=function() {
 	this.pageWidth=0;
 	this.pageHeight=0;
-	this.gridWidth=800;
-	this.gridHeight=800;
+	this.gridSize=800;
 
 	this.init=function() {
-		this.pageWidth=$(window).width();
-		this.pageHeight=$(window).height();
+		this.pageHeight=$(window).height()-20;
 		console.log("Page Height: "+this.pageHeight);
 
-		if (this.pageHeight<this.gridHeight) {
-			this.gridWidth=this.pageHeight;
-			this.gridHeight=this.pageHeight;
+		if (this.pageHeight<this.gridSize) {
+			this.gridSize=this.pageHeight;
 		}
 
+		// Make the grid size divisible by 20 
+		this.gridSize=parseInt(this.gridSize/20)*20;
+
+
 		var $g=$("#grid");
-		$g.css({top:10,left:10,width:this.gridWidth,height:this.gridHeight-20});
+		$g.css({top:10,left:10,width:this.gridSize,height:this.gridSize});
+
 
 		var $p=$("#panel");
-		$p.css({left:this.gridWidth+20,width:300,height:this.gridHeight});
+		$p.css({left:this.gridSize+20,width:300,height:this.gridSize});
 	}
 
 

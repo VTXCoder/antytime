@@ -225,12 +225,87 @@ creature.8637826
 	.y=
 	.state}
 
+--------------------------
+
+Command cycle
+
+	All commands are executed in the following cycle from when they are received
+
+	One cycle should take 2 seconds
+
+	A command is broken up into sub-commands / 1 for every cycle
+
+	Ant282 - Move("13/12","14/12")
+
+Send a list of commands to the client at the start of every command cycle in one big set
+so they can be executed simulataneously
+
+Effect should be smooth going from one cycle to the next 
+
+
+CLIENT CYCLE
+
+0s Execute client commands
+1s Receive next cycle commands so they can be executed immediately
+
+SERVER CYCLE 
+
+Send commands to all clients
+
+Always be open to receiving commands
+
+Or don't have cycles at all?
+
+
+Move A - B 
+
+Transiting between POS A and POS B
+
+---------------
+
+Server Grid
+
+	Cycling every second
+
+	History
+
+	1000.1 - Ant1 moving from 9/12 to 10/12
+		.2 -  
+
+
+	Snapshot
+
+
+
+
+
+
+
+
+Need to receive the next set of commands before the current cycle ends
+
+
+
 
 --------------------------
 
 Feeding Area
 
 	
+
+--------------------------------------
+
+
+features
+
+https://code.google.com/p/jqueryrotate/wiki/Examples
+
+
+-----------------------
+
+
+GridPassCode: 297839826323232
+GridServer: i1981.antytime.com 
 
 
 
