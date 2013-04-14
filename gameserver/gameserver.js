@@ -26,7 +26,7 @@ app.configure(function(){
 });
 
 // Settings
-var settings	= require('./settings/'+app.settings.env).settings;
+var settings	= require('./../settings/'+app.settings.env).settings;
 global.settings=settings;
 
 var db=settings.postgres;
@@ -40,7 +40,7 @@ console.log("Antytime - Port: %d - %s", server.address().port, app.settings.env)
 // Start Socket IO
 
 var io = require('socket.io').listen(server);
-console.log("Socket I/O Active");
+//console.log("Socket I/O Active");
 
 /*
 io.sockets.on('connection', function (socket) {

@@ -13,7 +13,7 @@ var app = require('http').createServer(handler)
 app.listen(4001);
 
 
-var settings  = require('./settings/development').settings;
+var settings  = require('./../settings/development').settings;
 global.settings=settings;
 
 
