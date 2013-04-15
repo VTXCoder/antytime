@@ -10,6 +10,8 @@
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app);
 
+io.set('log level', 1);
+
 app.listen(4001);
 
 
@@ -25,6 +27,28 @@ function handler (req, res) {
 // Need to figure out which grid to manage
 var Grids=["DeadLeaves-1x1"];
 
+// Start a cycle for each grid
+
+// Testing
+
+var creatures=require("./core/creatures.js");
+/*
+var ant=creatures.create("black-ant");
+ant.setGrid("DeadLeaves-1x1");
+*/
+
+creatures.getByID("46b952d5-cfb4-4876-91dd-492a074a145f",function(err,ant) {
+    if (err) console.log(err);
+    if (!err) {
+      //ant.setType("black-ant");
+      //ant.setGrid("DeadLeaves-1x1");
+      //ant.setLocation(10,10);
+      console.log("FOUND "+ant.details.type+" hanging out at "+ant.details.grid+" ("+ant.details.xpos+"/"+ant.details.ypos+")");
+ 
+    }
+});
+
+
 
 io.sockets.on('connection', function (socket) {
 	console.log("Socket connection established");
@@ -38,6 +62,7 @@ io.sockets.on('connection', function (socket) {
   			
         socket.on("set-gridname",function(name,fn) {
           socket.set("gridName",name,function() {
+            socket.join(name);
             fn({ok:true});
           });
         });
