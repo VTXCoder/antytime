@@ -7,10 +7,9 @@ var grid={};
 var grid=function(name) {
 	this.name=name;
 	this.map={};
-	this.sprites={};
-
+	this.creatures=[];
+	this.cycle=0;
 	
-
 }
 
 

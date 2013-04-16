@@ -94,7 +94,10 @@ tb.redirect=function(url) {
 };
 
 
-
+function random(from,to)
+{
+    return Math.floor(Math.random()*(to-from+1)+from);
+}
 
 
 

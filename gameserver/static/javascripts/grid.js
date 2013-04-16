@@ -120,6 +120,32 @@ var gridObject=function() {
 		this.$g.append($feature);
 	};
 
+	this.drawCreature=function(creature) {
+		var posX=(creature.x-1)*this.squareSize;
+		var posY=(creature.y-1)*this.squareSize;
+		var def=defCreatures[creature.type];
+		console.log(def,creature,posX+" "+posY);
+
+
+
+		var file=game.settings.cdn+"images/creatures/"+def.template+"/"+def[creature.state].split()[0]+".png";
+		var width=def.width*this.scale/100;
+		var height=def.height*this.scale/100;
+
+		// Centre the creature in the cell
+		posX=posX+(this.squareSize/2)-(width/2);
+		posY=posY+(this.squareSize/2)-(height/2);
+
+		// Randomise position slightly
+		posX=posX+random(-this.squareSize/4,this.squareSize/4);
+		posY=posY+random(-this.squareSize/4,this.squareSize/4);
+		
+		var $creature=$("<img />",{"src":file,"class":"creature","width":width,"height":height});
+		
+		$creature.css({left:posX,top:posY}).rotate(parseInt(creature.rotation));
+		this.$g.append($creature);
+	};
+
 	this.showGrid=function() {
 		var x,y;
 		for (y=this.squareSize;y < this.gridSize; y=y+this.squareSize) {

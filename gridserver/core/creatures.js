@@ -1,8 +1,8 @@
 
 // Track creatures throughout the game
-var redis=require("redis");
+var redis = require("redis");
 var uuid = require('node-uuid');
-
+var _ = require('underscore');
 
 var create=function(type) {
 	var id=uuid.v4();
@@ -23,9 +23,53 @@ var getByID=function(id,cb) {
 		if (!res) return cb(new Error("Creature not found! "+id));
 		return cb(null,new creature(id,JSON.parse(res)));
 	});
-
 };
 
+// May have some issues - not fully tested
+var deleteByID=function(id,cb) {
+	var client = redis.createClient();
+		client.on("error", function (err) {console.log("Error " + err);});
+		client.get("creature."+id,function(err,res) {
+		
+		if (err)  {client.quit();return cb(err);}
+		if (!res)  {client.quit();return cb(new Error("Creature not found! "+id));}
+		console.log("Found creature for deletion in grid: "+id);
+		// First delete it from the grid set
+		var multi=client.multi();
+		if (res.details && res.details.grid) multi.srem("grid."+res.details.grid+".creatures",id);
+		multi.srem("creatures",id);
+		multi.del("creature",id,redis.print);
+		multi.exec(function(err,res) {
+			if (err) console.log(err);
+			client.quit();
+			return cb();
+		});
+	});
+};
+
+// Return an array of creature objects
+var getByGrid=function(gridName,cb) {
+	var client = redis.createClient();
+		client.on("error", function (err) {console.log("Error " + err);});
+	client.smembers("grid."+gridName+".creatures",function(err,res) {
+		if (err) {client.quit();return cb(err);}
+		var multi=client.multi();
+		_.each(res,function(r) {multi.get("creature."+r)});
+		multi.exec(function(err,replies) {
+			client.quit();
+			if (err) {return cb(err);}
+			var creatureArray=[];
+			for (var i=0;i<replies.length;i++) {
+				creatureArray.push(new creature(res[i],replies[i]));
+			}
+			return cb(null,creatureArray);
+		});
+	});
+};
+
+
+
+// A single creature object
 var creature=function(id,details) {
 	this.id=id;
 	this.details=details || {};
@@ -78,3 +122,5 @@ var creature=function(id,details) {
 
 exports.create=create;
 exports.getByID=getByID;
+exports.getByGrid=getByGrid;
+exports.deleteByID=deleteByID;

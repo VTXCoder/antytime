@@ -1,4 +1,0 @@
-
-var avatarObject=function() {
-	
-}

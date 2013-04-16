@@ -25,7 +25,8 @@ reset to current state
 var game={};
 
 game.settings={
-	serverHost:"http://localhost:4001"
+	serverHost:"http://localhost:4001",
+	cdn:"/"
 };
 
 
@@ -36,7 +37,7 @@ $(function() {
 	game.layout=new layoutObject();
 	game.grid=new gridObject();
 	game.server=new serverObject(game.settings.serverHost);
-	game.avatar=new avatarObject();
+	game.creature=new creatureObject();
 	game.feature=new featureObject();
 
 	var gridName="DeadLeaves-1x1";
@@ -44,7 +45,7 @@ $(function() {
 	// Initialise the layout
 	game.layout.init();
 
-	game.server.connect("testkey123");
+	game.server.connect("testkey123","staticvortex");
 
 	// When the server is connected request the grid data
 	$(game).on("server-connected",function() {
@@ -57,7 +58,7 @@ $(function() {
 			}
 		});
 
-		
+		 
 	});
 
 	$(game).on("access-failed",function() {
@@ -67,14 +68,18 @@ $(function() {
 	$(game).on("grid-initialised",function() {
 		console.log("Grid Initialised");
 
-
+		game.server.initCreatures(function(data) {
+			_.each(data,function(creature) {
+				game.creature.create(creature);
+			});
+		});
 
 	});
 
 });
 
 
-
+// Natural cell size 40x40 pixels
 var layoutObject=function() {
 	this.pageWidth=0;
 	this.pageHeight=0;

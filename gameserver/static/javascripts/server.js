@@ -1,17 +1,19 @@
 
 
-// Connect to a geme server using a gamekey
+// Connect to a game server using a gamekey
 var serverObject=function(host) {
 	this.host=host;
 	this.status="disconnected";
 	this.socket=null;
 
-	this.connect=function(gamekey) {
+	this.connect=function(gamekey,username) {
 		this.status="connecting";
 		//$(game).trigger("server.status","connecting");
 		this.socket=io.connect(this.host);
 		
-		this.socket.on("access-key-request",function(data,fn) {fn(gamekey)});
+		this.socket.on("access-key-request",function(data,fn) {
+			fn({gamekey:gamekey,username:username})
+		});
 		
 		this.socket.on("access-granted",function() {
 			if (this.status!="connected") {
@@ -41,12 +43,12 @@ var serverObject=function(host) {
 		this.socket.emit("get-feature",type,function(data) {
 			cb(data);
 		});
-	}
+	};
 
-	//this.getSnapshot=function() {
-	//	this.socket.emit("get-snapshot",null,function(data) {
-	//		cb(data);
-	//	});
-	//}
+	this.initCreatures=function(cb) {
+		this.socket.emit("init-creatures",null,function(data) {
+			cb(data);
+		});
+	};
 
 }
