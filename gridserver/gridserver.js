@@ -125,32 +125,39 @@ io.sockets.on('connection', function (socket) {
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'still',
+            state:'walk',
             x:12,
             y:14
           },
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'still',
+            state:'walk',
             x:13,
             y:14
           },
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'still',
+            state:'walk',
             x:12,
             y:15
           },
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'still',
+            state:'hide',
             x:12,
-            y:15
+            y:19
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'dead',
+            x:17,
+            y:17
           }
-          );
+          );  
 
           fn(a);
         });

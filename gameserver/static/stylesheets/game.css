@@ -37,3 +37,11 @@
 	position:absolute;
 
 }
+
+.creature.state-hide {
+	opacity:.5;
+}
+
+.creature.state-dead {
+	opacity:.7;
+}

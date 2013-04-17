@@ -137,7 +137,19 @@ Not immediately.
 Client receives commands for next second while executing the current second. 
 
 
+---
 
+
+
+-2 
+
+-1
+
+Current
+
+
+
+{a:'w',d:'n',s:1}
 
 
 

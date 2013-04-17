@@ -125,10 +125,12 @@ var gridObject=function() {
 		var posY=(creature.y-1)*this.squareSize;
 		var def=defCreatures[creature.type];
 		console.log(def,creature,posX+" "+posY);
+		
+		if (!def) console.log("Creature definition missing: "+creature.type);
+		if (!def.states[creature.state]) console.log("Creature state missing: "+creature.state);
 
-
-
-		var file=game.settings.cdn+"images/creatures/"+def.template+"/"+def[creature.state].split()[0]+".png";
+		var statefile=def.states[creature.state].split(",")[0];
+		var file=game.settings.cdn+"images/creatures/"+def.template+"/"+statefile+".png";
 		var width=def.width*this.scale/100;
 		var height=def.height*this.scale/100;
 
@@ -139,13 +141,63 @@ var gridObject=function() {
 		// Randomise position slightly
 		posX=posX+random(-this.squareSize/4,this.squareSize/4);
 		posY=posY+random(-this.squareSize/4,this.squareSize/4);
+
+		creature.$creature=$("<img />",{"src":file,"class":"creature","width":width,"height":height});
 		
-		var $creature=$("<img />",{"src":file,"class":"creature","width":width,"height":height});
-		
-		$creature.css({left:posX,top:posY}).rotate(parseInt(creature.rotation));
-		this.$g.append($creature);
+		creature.$creature.addClass("state-"+creature.state);
+
+		creature.$creature.css({left:posX,top:posY}).rotate(parseInt(creature.rotation));
+		this.$g.append(creature.$creature);
+
+		// Check for animation
+		if (def.states[creature.state].split(",").length>1) {
+			
+			this.animateCreature(creature);
+		}
 	};
 
+ 
+	this.animateCreature=function(creature) {
+		var $c=creature.$creature;
+		var def=defCreatures[creature.type];
+		var seq=def.states[creature.state].split(",");
+
+		//console.log("Need to animate creature: ",seq);
+
+		// Set to base
+		$c.attr("src",game.settings.cdn+"images/creatures/"+def.template+"/"+seq[0]+".png");
+
+		// Figure out total cycle time
+		var totaltime=0;
+		for (var i=1;i<seq.length;i=i+2) totaltime+=parseInt(seq[i]);
+		console.log(totaltime);
+
+		var startTime=0;
+		var nextState="";
+
+		for (var i=1;i<seq.length;i=i+2) {
+			startTime+=parseInt(seq[i]);
+			if (i+1<seq.length) nextState=seq[i+1]; else nextState=seq[0];
+			
+			//console.log("Show "+nextState+" in "+startTime+"ms then repeat every "+totaltime+"ms");
+			
+			// Complicated little timer for the animation
+			(function(src) {
+				setTimeout(function(){
+					$c.attr("src",src);
+					if (def.states[creature.state].split(",").length>1) {
+						creature.animateTimer=setInterval(function() {
+							$c.attr("src",src);
+						},totaltime);
+					}
+				},startTime);
+			})(game.settings.cdn+"images/creatures/"+def.template+"/"+nextState+".png");
+			
+		}
+	};
+
+
+  
 	this.showGrid=function() {
 		var x,y;
 		for (y=this.squareSize;y < this.gridSize; y=y+this.squareSize) {
