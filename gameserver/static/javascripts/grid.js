@@ -124,7 +124,7 @@ var gridObject=function() {
 		var posX=(creature.x-1)*this.squareSize;
 		var posY=(creature.y-1)*this.squareSize;
 		var def=defCreatures[creature.type];
-		console.log(def,creature,posX+" "+posY);
+		//console.log(def,creature,posX+" "+posY);
 		
 		if (!def) console.log("Creature definition missing: "+creature.type);
 		if (!def.states[creature.state]) console.log("Creature state missing: "+creature.state);
@@ -139,8 +139,11 @@ var gridObject=function() {
 		posY=posY+(this.squareSize/2)-(height/2);
 
 		// Randomise position slightly
-		posX=posX+random(-this.squareSize/4,this.squareSize/4);
-		posY=posY+random(-this.squareSize/4,this.squareSize/4);
+		creature.offX=random(-this.squareSize/4,this.squareSize/4);
+		creature.offY=random(-this.squareSize/4,this.squareSize/4);
+
+		posX=posX+creature.offX;
+		posY=posY+creature.offY;
 
 		creature.$creature=$("<img />",{"src":file,"class":"creature","width":width,"height":height});
 		
@@ -152,7 +155,7 @@ var gridObject=function() {
 		// Check for animation
 		if (def.states[creature.state].split(",").length>1) {
 			
-			this.animateCreature(creature);
+			//this.animateCreature(creature);
 		}
 	};
 
@@ -169,11 +172,14 @@ var gridObject=function() {
 
 		// Figure out total cycle time
 		var totaltime=0;
-		for (var i=1;i<seq.length;i=i+2) totaltime+=parseInt(seq[i]);
+		for (var i=1;i<seq.length;i=i+2) {
+			totaltime+=parseInt(seq[i]);
+		}
 		console.log(totaltime);
 
 		var startTime=0;
 		var nextState="";
+		var offset=random(1,parseInt(seq[1]/2));
 
 		for (var i=1;i<seq.length;i=i+2) {
 			startTime+=parseInt(seq[i]);
@@ -182,7 +188,7 @@ var gridObject=function() {
 			//console.log("Show "+nextState+" in "+startTime+"ms then repeat every "+totaltime+"ms");
 			
 			// Complicated little timer for the animation
-			(function(src) {
+			(function(src,off) {
 				setTimeout(function(){
 					$c.attr("src",src);
 					if (def.states[creature.state].split(",").length>1) {
@@ -190,12 +196,61 @@ var gridObject=function() {
 							$c.attr("src",src);
 						},totaltime);
 					}
-				},startTime);
-			})(game.settings.cdn+"images/creatures/"+def.template+"/"+nextState+".png");
-			
+				},startTime+off);
+			})(game.settings.cdn+"images/creatures/"+def.template+"/"+nextState+".png",offset);
+		
+			// If exploring then move around the cell a bit
+			if (creature.state=="explore") {
+				var self=this;
+				setTimeout(function() {
+					self.exploreCreature(creature);
+				},random(1,1000));
+			}
+
 		}
 	};
 
+	this.repositionCreature=function(creature) {
+		var $c=creature.$creature;
+		var posX=(creature.x-1)*this.squareSize;
+		var posY=(creature.y-1)*this.squareSize;
+		var def=defCreatures[creature.type];
+		var width=def.width*this.scale/100;
+		var height=def.height*this.scale/100;
+
+		// Centre the creature in the cell
+		posX=posX+(this.squareSize/2)-(width/2);
+		posY=posY+(this.squareSize/2)-(height/2);
+
+		if (creature.offX) posX=posX+creature.offX;
+		if (creature.offY) posY=posY+creature.offY;
+
+		$c.css({'left':posX,'top':posY});
+	};
+
+	this.exploreCreature=function(creature) {
+		//console.log("Exploring");
+
+		// Rotate 
+		// And then move a bit in that direction depending on how much room there is...
+		var $c=creature.$creature;
+
+		creature.rotation+=random(-20,20);
+		$c.rotate({animateTo:creature.rotation});
+
+		creature.offX += 2*Math.cos(degreeInRadians * (creature.rotation-90));
+    	creature.offY += 2*Math.sin(degreeInRadians * (creature.rotation-90));
+
+    	this.repositionCreature(creature);
+
+
+		if (creature.state=="explore") {
+			var self=this;
+			setTimeout(function() {
+				self.exploreCreature(creature);
+			},random(1,400));
+		}
+	};
 
   
 	this.showGrid=function() {

@@ -125,21 +125,105 @@ io.sockets.on('connection', function (socket) {
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'walk',
+            state:'explore',
             x:12,
             y:14
           },
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'walk',
+            state:'explore',
             x:13,
             y:14
           },
           {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
-            state:'walk',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
+            x:12,
+            y:15
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'explore',
             x:12,
             y:15
           },
@@ -156,6 +240,13 @@ io.sockets.on('connection', function (socket) {
             state:'dead',
             x:17,
             y:17
+          },
+          {
+            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
+            type:'small-black-ant',
+            state:'still',
+            x:17,
+            y:15
           }
           );  
 
