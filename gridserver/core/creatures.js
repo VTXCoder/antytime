@@ -17,7 +17,7 @@ var getByID=function(id,cb) {
 		client.on("error", function (err) {console.log("Error " + err);});
 
 	client.get("creature."+id,function(err,res) {
-		console.log(res);
+		//console.log(res);
 		client.quit();
 		if (err) return cb(err);
 		if (!res) return cb(new Error("Creature not found! "+id));

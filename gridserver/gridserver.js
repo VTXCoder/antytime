@@ -36,9 +36,11 @@ var manageGridNames=["DeadLeaves-1x1"];
 var serverGrids=[];
 
 // Create an array of grid objects
+// No timing issues here so fine to hold the thread as everything intialises
 _.each(manageGridNames,function(gridName) {
   var newGrid=new grids.grid(gridName);
   serverGrids.push(newGrid);
+  newGrid.snapshot(); 
 });
 
 
@@ -53,7 +55,7 @@ creatures.getByID("7b9be7a2-b515-4751-87e6-3bb6c6fb58d9",function(err,ant) {
 */
 
 // Testing
-/*
+/* 
 
 creatures.getByGrid("DeadLeaves-1x1",function(err,res) {
   if (err) console.log(err);
@@ -68,11 +70,9 @@ creatures.getByGrid("DeadLeaves-1x1",function(err,res) {
 
 });
 
+*/
 
-var ant=creatures.create("black-ant");
-ant.setGrid("DeadLeaves-1x1");
-
-
+/*
 var creatures=require("./core/creatures.js");
 var ant=creatures.create("black-ant");
 ant.setGrid("DeadLeaves-1x1");
@@ -80,9 +80,7 @@ ant.setLocation(10,10);
 */
 
 
-/*
 
-*/
 
 
 io.sockets.on('connection', function (socket) {
