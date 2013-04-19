@@ -8,7 +8,14 @@
 */
 
 var app = require('http').createServer(handler)
-  , io = require('socket.io').listen(app);
+  , io = require('socket.io').listen(app)
+  , _ = require('underscore');
+
+
+var creatures=require("./core/creatures.js");
+var clients=require("./core/clients.js");
+var cycle=require("./core/cycle.js");
+var grids=require("./core/grids.js");
 
 io.set('log level', 1);
 
@@ -24,12 +31,15 @@ function handler (req, res) {
   return res.end('No direct access to server.');
 }
 
-// Need to figure out which grid to manage
-var Grids=["DeadLeaves-1x1"];
+// What grids are handled by this gridserver
+var manageGridNames=["DeadLeaves-1x1"];
+var serverGrids=[];
 
-// Start a cycle for each grid
-var creatures=require("./core/creatures.js");
-var clients=require("./core/clients.js");
+// Create an array of grid objects
+_.each(manageGridNames,function(gridName) {
+  var newGrid=new grids.grid(gridName);
+  serverGrids.push(newGrid);
+});
 
 
 
@@ -133,97 +143,6 @@ io.sockets.on('connection', function (socket) {
             id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
             type:'small-black-ant',
             state:'explore',
-            x:13,
-            y:14
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
-            x:12,
-            y:15
-          },
-          {
-            id:'a83e528b-ab05-4456-90e5-2d691de44dcd',
-            type:'small-black-ant',
-            state:'explore',
             x:12,
             y:15
           },
@@ -265,12 +184,16 @@ io.sockets.on('connection', function (socket) {
       }
 
   	});
-
-
-
-
- 
-  //socket.on('my other event', function (data) {
-  //  console.log(data);
-  //});
 });
+
+
+
+
+
+// Start cycling after an initial 5 second delay
+setTimeout(function() {
+  _.each(serverGrids,function(g) {
+    g.processor=new cycle.processor(g);
+    g.processor.begin();
+  });
+},5000); 

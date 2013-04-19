@@ -1,18 +1,14 @@
 
 // This is the server side grid object
-
-
-var grid={};
-
 var grid=function(name) {
+	this.processor=null;
 	this.name=name;
 	this.map={};
 	this.creatures=[];
-	this.cycle=0;
-	
+
 }
 
-
+exports.grid=grid;
 
 
 
