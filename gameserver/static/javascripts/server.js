@@ -27,7 +27,14 @@ var serverObject=function(host) {
 		});
 
 		this.socket.on("client-directives",function(directives) {
-			console.log(directives);
+		
+			console.log("Received "+directives.directives.length+ " directives for cycle "+directives.cycle+".");
+			_.each(directives.directives,function(d) {
+				console.log(d);
+				if (d.directive=="snapshot") {
+					game.grid.snapshot(d.data);
+				};
+			});
 		});
 	};
 

@@ -30,16 +30,29 @@ var creatures=require("./creatures.js");
 var grid=function(name) {
 	this.processor=null;
 	this.name=name;
+	this.definition={};
 	this.map=[];
 	this.gridCreatures=[];
 	this.gridFeatures=[];
 	this.gridItems=[];
 
+	// Constructor
+	var d=require('./../game/grids/'+name);
+	d.fullbg=global.settings.cdn+"bg/"+d.bg;
+	this.definition=d;
+
 	// Initialise the map
 	for (var x=0;x<50;x++) {this.map[x]=[];for (var y=0;y<50;y++) this.map[x][y]={};}
 		
 	this.getClientSnaphot=function(cb) {
-		cb({"test":"test"});
+		var snapshot={};
+		
+		// Grid background
+		snapshot.fullbg=this.definition.fullbg;
+		snapshot.name=this.definition.name;
+
+
+		cb(snapshot);
 	}
 
 	// Snapshot the grid from persistant storage

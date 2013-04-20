@@ -43,6 +43,13 @@ var gridObject=function() {
 
 	this.$g.disableSelection();
 
+	this.snapshot=function(data) {
+		this.data=data;
+		console.log("Received Snapshot");
+		console.log(data);
+		this.init();
+	};
+
 	// Matrix will be downloaded and created
 	this.create=function() {
 		var self=this;

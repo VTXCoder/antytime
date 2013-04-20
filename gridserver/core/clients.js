@@ -52,6 +52,7 @@ var client=function(username,socket) {
 		this.grid=grid;
 		this.grid.getClientSnaphot(function(snap) {
 			self.addDirective("snapshot",snap);
+			self.sentSnapshot=true;
 		});
 	};
 
