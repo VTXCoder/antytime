@@ -7,6 +7,7 @@ Squares are naturally 25px 25px at largest size.
 
 var gridObject=function() {
 	this.$g=$("#grid");
+	this.size=30;
 	this.squareSize=25;
 	this.cmd=[];
 	this.processing=false;
@@ -16,14 +17,26 @@ var gridObject=function() {
 	this.gridSize=0;
 	this.gridHoverX=null;
 	this.gridHoverY=null;
-	this.map=null;
+	this.map=[];
 	this.$g.disableSelection();
+
+	for (var x=0;x<this.size;x++) {this.map[x]=[];for (var y=0;y<this.size;y++) this.map[x][y]={};}
+	
 
 	this.snapshot=function(data) {
 		this.data=data;
 		console.log("Received Snapshot");
 		console.log(data);
-		//this.map=data.map; // just a reference
+
+		// Default Terrain
+		if (this.data.defaultTerrain) {
+			for (var x=0;x<this.size;x++) {
+				for (var y=0;y<this.size;y++) 
+					this.map[x][y].terrain=this.data.defaultTerrain;
+			}
+		}
+
+
 		this.init();
 	};
 

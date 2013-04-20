@@ -56,11 +56,8 @@ var grid=function(name) {
 		// Grid background
 		snapshot.fullbg=this.definition.fullbg;
 
-		// Map
-		//snapshot.map=this.map;
-
 		// Terrain
-		//snapshot.defaultTerrain=this.definition.defaultTerrain;
+		snapshot.defaultTerrain=this.definition.defaultTerrain;
 
 		// Features
 
