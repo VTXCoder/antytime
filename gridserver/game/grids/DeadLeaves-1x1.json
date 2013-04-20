@@ -9,22 +9,22 @@
 	[
 		{
 			"type":"GreenLeaf",
-			"position":"11/14",
+			"position":"0/0",
 			"rotate":"0"
 		},
 		{
 			"type":"GreenLeaf",
-			"position":"15/15",
+			"position":"30/30",
 			"rotate":"90"
 		},
 		{
 			"type":"GreenLeaf",
-			"position":"10/13",
+			"position":"20/26",
 			"rotate":"90"
 		},
 		{
 			"type":"Log",
-			"position":"10/2",
+			"position":"25/4",
 			"rotate":"0"
 		}
 

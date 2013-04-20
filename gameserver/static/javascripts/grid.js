@@ -25,6 +25,8 @@ Sprites are purely visual.. instructions sent from server..
 
 There could be 10000's of sprites but that really doesn't matter
 
+Squares are naturally 15px 15px at largest size.
+
 */
 
 var gridObject=function() {
@@ -34,7 +36,6 @@ var gridObject=function() {
 	this.processing=false;
 	this.scale=100;
 	this.data=null;
-
 	this.perfectGridSize=750;
 	this.gridSize=0;
 	this.gridHoverX=null;
@@ -46,19 +47,21 @@ var gridObject=function() {
 	this.create=function() {
 		var self=this;
 		// Get the matrix
+		/*
 		game.server.getGridData(function(data) {
 			self.data=data;
 			console.log("Grid Received");
 			console.log(self.data);
 			game.grid.init();
 		});
+		*/
 	};
 
 	this.init=function() {
 		console.log("Initialising Grid: "+this.data.name);
 		self=this;
 		this.gridSize=game.layout.gridSize;
-		this.squareSize=this.gridSize/20;
+		this.squareSize=this.gridSize/50;
 		this.scale=(this.gridSize/this.perfectGridSize)*100;
 
 		this.$g.on("mousemove",function(e) {
@@ -83,13 +86,15 @@ var gridObject=function() {
 		//this.showGrid();
 
 		// Process the features
+		/*
 		if (this.data.features) {
 			_.each(this.data.features,function(feature) {
 				console.log(feature);
 				game.feature.create(feature);
 			});
 		}
-		
+		*/
+
 		$(game).trigger("grid-initialised");
 		//game.server.getSnapshot();
 

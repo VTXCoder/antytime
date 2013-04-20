@@ -8,11 +8,14 @@
 	map[0][0].features[] 
 	etc.
 
-	Different types of terrain....
+	Different types of environment....
 
 		open (default / undefined)
 		blocked (can't go here at all)
-		rough (slow and indirect)
+		leaves (slow and indirect)
+		desert 
+		wood
+		underground
 		water (ants can float but not swim)
 
 */
@@ -33,10 +36,10 @@ var grid=function(name) {
 	this.gridItems=[];
 
 	// Initialise the map
-	for (var x=0;x<20;x++) {this.map[x]=[];for (var y=0;y<20;y++) this.map[x][y]={};}
+	for (var x=0;x<50;x++) {this.map[x]=[];for (var y=0;y<50;y++) this.map[x][y]={};}
 		
-	this.getClientSnaphot=function() {
-
+	this.getClientSnaphot=function(cb) {
+		cb({"test":"test"});
 	}
 
 	// Snapshot the grid from persistant storage

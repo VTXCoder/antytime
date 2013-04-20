@@ -2,7 +2,7 @@
 
 var featureObject=function() {
 	this.featureCache={};
-
+/*
 	this.create=function(feature) {
 		var self=this;
 		if (!this.featureCache[feature.type]) {
@@ -21,5 +21,5 @@ var featureObject=function() {
 	};
 
 	_.bindAll();
-
+	*/
 }

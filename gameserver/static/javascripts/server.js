@@ -25,6 +25,10 @@ var serverObject=function(host) {
 		this.socket.on("access-failed",function() {
 			$(game).trigger("access-failed");
 		});
+
+		this.socket.on("client-directives",function(directives) {
+			console.log(directives);
+		});
 	};
 
 	this.setGridName=function(name,cb) {
@@ -33,17 +37,18 @@ var serverObject=function(host) {
 		});
 	};
 
+	/*
 	this.getGridData=function(cb) {
 		this.socket.emit("request-grid-data",function(data) {
 			cb(data);
 		});
 	};
-
-	this.getFeature=function(type,cb) {
-		this.socket.emit("get-feature",type,function(data) {
-			cb(data);
-		});
-	};
+	*/
+	//this.getFeature=function(type,cb) {
+	//	this.socket.emit("get-feature",type,function(data) {
+	//		cb(data);
+	//	});
+	//};
 
 	this.initCreatures=function(cb) {
 		this.socket.emit("init-creatures",null,function(data) {

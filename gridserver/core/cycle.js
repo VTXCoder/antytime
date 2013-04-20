@@ -1,5 +1,6 @@
 var redis = require("redis");
 var _ = require('underscore');
+var clients=require("./clients.js");
 
 var cycleMiliseconds=2000;
 // The idea is everything should be backed up at the end of each cycle
@@ -49,7 +50,21 @@ var processor=function(grid) {
 	};
 
 	this.processCycle=function() {
+		var self=this;
 		console.log("Process: "+this.grid.name+" "+this.cycle);
+
+		// Send a ping to all the clients for now
+		console.log("Connected Clients: "+clients.clients.length);
+		_.each(clients.clients,function(client) {
+			
+			// Make sure all clients have received the snapshot
+			//if (!client.sentSnapshot) {
+			//	self.grid.getSnapshot();
+			//}
+
+			//client.addDirective("ping",null,self.cycle); // temp
+			client.sendDirectives(self.cycle);
+		});
 	};
 
 };

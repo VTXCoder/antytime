@@ -28,9 +28,39 @@ var client=function(username,socket) {
 	this.username=username;
 	this.socket=socket;
 	this.grid=null;
+	this.sentSnapshot=false;
+	this.directives=[];
+
+	this.addDirective=function(d,data) {
+		var d={directive:d,data:data};
+		this.directives.push(d);
+	};
+
+	this.sendDirectives=function(cycle) {
+		var self=this;
+		if (this.directives.length>0) {
+			console.log("Sending "+this.directives.length+" directives to "+this.username);
+			this.socket.emit("client-directives",{cycle:cycle,directives:this.directives});
+			self.directives=[];
+		}
+	};
+
+	this.setGrid=function(grid) {
+		// The first directive will be to request a snapshot
+		console.log("Setting client to "+grid.name);
+		var self=this;
+		this.grid=grid;
+		this.grid.getClientSnaphot(function(snap) {
+			self.addDirective("snapshot",snap);
+		});
+	};
+
+	 
+	
 }
 
 
 
 exports.add=add;
 exports.remove=remove;
+exports.clients=clients;
