@@ -8,18 +8,16 @@ var serverObject=function(host) {
 
 	this.connect=function(gamekey,username) {
 		this.status="connecting";
-		//$(game).trigger("server.status","connecting");
 		this.socket=io.connect(this.host);
 		
 		this.socket.on("access-key-request",function(data,fn) {
+			console.log("Receiving access request.");
 			fn({gamekey:gamekey,username:username})
 		});
 		
 		this.socket.on("access-granted",function() {
-			if (this.status!="connected") {
-				this.status="connected";
-				$(game).trigger("server-connected");
-			}
+			this.status="connected";
+			$(game).trigger("server-connected");
 		});
 
 		this.socket.on("access-failed",function() {
@@ -36,29 +34,16 @@ var serverObject=function(host) {
 				};
 			});
 		});
+
+		this.socket.on("disconnect",function() {
+			console.log("Remote Disconnect");
+			this.status="disconnected";
+			game.grid.disable();
+		});
 	};
 
 	this.setGridName=function(name,cb) {
 		this.socket.emit("set-gridname",name,function(data) {
-			cb(data);
-		});
-	};
-
-	/*
-	this.getGridData=function(cb) {
-		this.socket.emit("request-grid-data",function(data) {
-			cb(data);
-		});
-	};
-	*/
-	//this.getFeature=function(type,cb) {
-	//	this.socket.emit("get-feature",type,function(data) {
-	//		cb(data);
-	//	});
-	//};
-
-	this.initCreatures=function(cb) {
-		this.socket.emit("init-creatures",null,function(data) {
 			cb(data);
 		});
 	};

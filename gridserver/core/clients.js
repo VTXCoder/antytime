@@ -55,8 +55,8 @@ var client=function(username,socket) {
 			self.sentSnapshot=true;
 		});
 	};
-
-	 
+ 
+	  
 	
 }
 

@@ -35,6 +35,7 @@ var grid=function(name) {
 	this.gridCreatures=[];
 	this.gridFeatures=[];
 	this.gridItems=[];
+	this.size=30;
 
 	// Constructor
 	var d=require('./../game/grids/'+name);
@@ -42,26 +43,49 @@ var grid=function(name) {
 	this.definition=d;
 
 	// Initialise the map
-	for (var x=0;x<50;x++) {this.map[x]=[];for (var y=0;y<50;y++) this.map[x][y]={};}
-		
+	for (var x=0;x<this.size;x++) {this.map[x]=[];for (var y=0;y<this.size;y++) this.map[x][y]={};}
+	
+	
+
 	this.getClientSnaphot=function(cb) {
 		var snapshot={};
-		
-		// Grid background
-		snapshot.fullbg=this.definition.fullbg;
+
+		// Grid Name
 		snapshot.name=this.definition.name;
 
+		// Grid background
+		snapshot.fullbg=this.definition.fullbg;
+
+		// Map
+		//snapshot.map=this.map;
+
+		// Terrain
+		//snapshot.defaultTerrain=this.definition.defaultTerrain;
+
+		// Features
+
+		// Items
+
+		// Creatures
+
+		// Links
 
 		cb(snapshot);
 	}
-
+     
 	// Snapshot the grid from persistant storage
 	this.snapshot=function() {
 		var self=this;
 		console.log("Snapshot Grid: "+this.name);
+		
+		// Default Terrain
+		if (this.definition.defaultTerrain) {
+			this.mapTerrain("all",this.definition.defaultTerrain);
+		}
+  
+		// Creatures
 		var client = redis.createClient();
 		client.on("error", function (err) {console.log("Error " + err);});
-
 		client.smembers("grid."+this.name+".creatures",function(err,res) {
 			client.quit();
 			if (err) console.log(err); else {
@@ -92,6 +116,19 @@ var grid=function(name) {
 		if (!cell[type]) cell[type]=[];
 		cell[type].push(object);
 	};
+
+	this.mapTerrain=function(location,type) {
+		if (location=="all") {
+			console.log("Mapping all terrain to: "+type);
+			for (var x=0;x<this.size;x++) {
+				for (var y=0;y<this.size;y++) 
+					this.map[x][y].terrain=type;
+			}
+		}
+
+		// Incomplete
+	};
+
 
 	this.mapRemove=function(x,y,type,object) {
 

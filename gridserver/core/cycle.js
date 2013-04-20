@@ -36,8 +36,10 @@ var processor=function(grid) {
 
 		var client = redis.createClient();
 		client.on("error", function (err) {console.log("Error " + err);});
-		client.set("grid."+this.grid.name+".cycle",this.cycle);
-
+		client.set("grid."+this.grid.name+".cycle",this.cycle,function() {
+			client.quit();
+		});
+		
 		var date=new Date();
 		var e=date.getTime()-s;
 
@@ -56,13 +58,6 @@ var processor=function(grid) {
 		// Send a ping to all the clients for now
 		console.log("Connected Clients: "+clients.clients.length);
 		_.each(clients.clients,function(client) {
-			
-			// Make sure all clients have received the snapshot
-			//if (!client.sentSnapshot) {
-			//	self.grid.getSnapshot();
-			//}
-
-			//client.addDirective("ping",null,self.cycle); // temp
 			client.sendDirectives(self.cycle);
 		});
 	};

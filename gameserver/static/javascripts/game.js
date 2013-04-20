@@ -46,16 +46,14 @@ $(function() {
 	game.layout.init();
 
 	game.server.connect("testkey123","staticvortex");
-
+ 
 	// When the server is connected request the grid data
 	$(game).on("server-connected",function() {
 
 		game.server.setGridName(gridName,function(data) {
 			console.log("Set grid to "+gridName+" "+data.ok);
 			// should make sure we can access that grid here
-			if (data.ok) {
-				game.grid.create();
-			}
+			if (data.ok) {}
 		});
 
 		 
@@ -65,6 +63,7 @@ $(function() {
 		alert("ACCESS FAILED");
 	});
 
+	/*
 	$(game).on("grid-initialised",function() {
 		console.log("Grid Initialised");
 
@@ -75,6 +74,7 @@ $(function() {
 		});
 
 	});
+	*/
 
 });
 

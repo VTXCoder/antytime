@@ -1,37 +1,13 @@
 
-// Objects need to be rendered sequentially
-// So use a command queue
-// command, parameters
-
 /*
 
-Actually z-index is important
-
-divs
-
-cluster (made up of multiple divs)
-
-matrix
-sprite
-
-DrawSprite()
-
-GetSpriteDef() - Get the definition f
-
-
-Underscore templates to store sprites on CDN
-
-Sprites are purely visual.. instructions sent from server.. 
-
-There could be 10000's of sprites but that really doesn't matter
-
-Squares are naturally 15px 15px at largest size.
+Squares are naturally 25px 25px at largest size.
 
 */
 
 var gridObject=function() {
 	this.$g=$("#grid");
-	this.squareSize=20;
+	this.squareSize=25;
 	this.cmd=[];
 	this.processing=false;
 	this.scale=100;
@@ -40,35 +16,23 @@ var gridObject=function() {
 	this.gridSize=0;
 	this.gridHoverX=null;
 	this.gridHoverY=null;
-
+	this.map=null;
 	this.$g.disableSelection();
 
 	this.snapshot=function(data) {
 		this.data=data;
 		console.log("Received Snapshot");
 		console.log(data);
+		//this.map=data.map; // just a reference
 		this.init();
 	};
 
-	// Matrix will be downloaded and created
-	this.create=function() {
-		var self=this;
-		// Get the matrix
-		/*
-		game.server.getGridData(function(data) {
-			self.data=data;
-			console.log("Grid Received");
-			console.log(self.data);
-			game.grid.init();
-		});
-		*/
-	};
-
 	this.init=function() {
+		this.$g.html("");
 		console.log("Initialising Grid: "+this.data.name);
 		self=this;
 		this.gridSize=game.layout.gridSize;
-		this.squareSize=this.gridSize/50;
+		this.squareSize=this.gridSize/30;
 		this.scale=(this.gridSize/this.perfectGridSize)*100;
 
 		this.$g.on("mousemove",function(e) {
@@ -89,6 +53,12 @@ var gridObject=function() {
 			self.showHoverCell();
 		});
 
+		this.$g.on("click",function(e) {
+			e.stopPropagation();
+			self.click();
+
+		});
+
 		this.drawBackground();
 		//this.showGrid();
 
@@ -105,6 +75,16 @@ var gridObject=function() {
 		$(game).trigger("grid-initialised");
 		//game.server.getSnapshot();
 
+	};
+
+	this.click=function() {
+		console.log("Clicked at: "+this.gridHoverX+"/"+this.gridHoverY);
+		console.log(this.map[this.gridHoverX-1][this.gridHoverY-1]);
+	};
+
+	this.disable=function() {
+		this.$g.append($("<div />",{"id":"gridDisableOverlay"})
+			.css({width:this.$g.width(),height:this.$g.height()}));
 	};
 
 	this.showHoverCell=function() {

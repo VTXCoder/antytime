@@ -5,29 +5,33 @@
 	"width":75,
 	"height":75,
 	"bg":"DeadLeaves75x75.jpg",
+	"defaultTerrain":"uneven",
 	"features":
 	[
 		{
 			"type":"GreenLeaf",
-			"position":"0/0",
+			"position":"x00y00",
 			"rotate":"0"
 		},
 		{
 			"type":"GreenLeaf",
-			"position":"30/30",
+			"position":"x30y30",
 			"rotate":"90"
 		},
 		{
 			"type":"GreenLeaf",
-			"position":"20/26",
+			"position":"x20y26",
 			"rotate":"90"
 		},
 		{
 			"type":"Log",
-			"position":"25/4",
+			"position":"x25y04",
 			"rotate":"0"
 		}
-
+	],
+	"terrain":[
+		{"x04y10-x04y11":"blocked"},
+		{"x01y01":"blocked"}
 	]
 }
 

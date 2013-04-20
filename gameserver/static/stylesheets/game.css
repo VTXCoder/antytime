@@ -10,6 +10,13 @@
 	overflow:hidden;
 }
 
+#gridDisableOverlay {
+	background-color:#000;
+	width:100px;
+	height:100px;
+	opacity: .5;
+}
+
 .gridlines {
 	position:absolute;
 	background-color:#333;

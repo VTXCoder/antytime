@@ -107,8 +107,8 @@ io.sockets.on('connection', function (socket) {
 						socket.join(name);
 						fn({ok:true});
 					});
-				});
-
+				}); 
+ 
 				/*
 				socket.on("request-grid-data",function(fn) {
 					socket.get("gridName",function(err,name) {
@@ -125,6 +125,7 @@ io.sockets.on('connection', function (socket) {
 				});
 				*/
 
+				/*
 				socket.on("init-creatures",function(data,fn) {
 					// DEBUG
 
@@ -175,7 +176,8 @@ io.sockets.on('connection', function (socket) {
 
 					fn(a);
 				});
-
+				*/
+				
 				socket.on('disconnect', function () {
 					console.log("Socket Disconnected");
 					clients.remove(client.n);
