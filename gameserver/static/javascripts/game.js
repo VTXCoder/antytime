@@ -81,28 +81,57 @@ $(function() {
 
 // Natural cell size 40x40 pixels
 var layoutObject=function() {
+	this.perfectCellSize=25;  	// This is the default width (25px cell size)
+	this.cellCountX=30;		  	// How many cells across
+	this.cellCountY=30;	
+
 	this.pageWidth=0;
 	this.pageHeight=0;
-	this.gridSize=800;
+	this.gridWidth=0;
+	this.gridHeight=0;
+
+	this.cellSize=0;
+	this.scale=1;
 
 	this.init=function() {
 		this.pageHeight=$(window).height()-20;
 		console.log("Page Height: "+this.pageHeight);
 
-		if (this.pageHeight<this.gridSize) {
-			this.gridSize=this.pageHeight;
-		}
+		this.cellSize=this.perfectCellSize;
+
+		this.gridWidth=this.cellCountX*this.cellSize;
+		this.gridHeight=this.cellCountY*this.cellSize;
+
+
+		//if (this.pageHeight<this.gridSize) {
+		//	this.gridSize=this.pageHeight;
+		//}
+
+
 
 		// Make the grid size divisible by 20 
-		this.gridSize=parseInt(this.gridSize/20)*20;
+		//this.gridWidth =parseInt(this.gridWidth/this.cellCountX)*this.cellCountX;
+		//this.gridHeight=parseInt(this.gridHeight/this.cellCountX)*this.cellCountY;
 
+		// Work out the cell size
+		//this.cellSize=this.gridSize/this.cellCountX;
+
+		// Work out the scaling
+		//this.scale=this.gridSize/this.perfectGridSize;
+
+
+
+		console.log("Layout Cell Count: "+this.cellCountX+"/"+this.cellCountY);
+		console.log("Layout Grid Size: "+this.gridWidth+"/"+this.gridHeight);
+		console.log("Layout Cell Size: "+parseInt(this.cellSize)+"px");
+		console.log("Layout Scale: "+parseInt(this.scale*100)+"%");
 
 		var $g=$("#grid");
-		$g.css({top:10,left:10,width:this.gridSize,height:this.gridSize});
+		$g.css({top:10,left:10,width:this.gridWidth,height:this.gridHeight});
 
 
 		var $p=$("#panel");
-		$p.css({left:this.gridSize+20,width:300,height:this.gridSize});
+		$p.css({left:this.gridWidth+20,width:300,height:this.gridHeight});
 	}
 
 

@@ -53,13 +53,25 @@ var grid=function(name) {
 		// Grid Name
 		snapshot.name=this.definition.name;
 
+		// Grid Size
+		snapshot.size=this.definition.size;
+
 		// Grid background
 		snapshot.fullbg=this.definition.fullbg;
 
 		// Terrain
 		snapshot.defaultTerrain=this.definition.defaultTerrain;
 
-		// Features
+		// Static Features
+		snapshot.features=this.gridFeatures;
+
+
+		// Dynamic Features (later)
+
+		// Send the features and their definitions
+
+
+
 
 		// Items
 
@@ -79,7 +91,14 @@ var grid=function(name) {
 		if (this.definition.defaultTerrain) {
 			this.mapTerrain("all",this.definition.defaultTerrain);
 		}
-  
+  		
+		// Static Features
+		if (this.definition.features) {
+			_.each(this.definition.features,function(feature) {
+				self.addStaticFeature(feature);
+			});
+		}
+
 		// Creatures
 		var client = redis.createClient();
 		client.on("error", function (err) {console.log("Error " + err);});
@@ -91,6 +110,33 @@ var grid=function(name) {
 			}
 		});
 	}
+
+	this.addStaticFeature=function(feature) {
+		var posX=Number(feature.position.split(".")[0]);
+		var posY=Number(feature.position.split(".")[1]);
+		console.log("Adding feature: "+feature.type+" "+posX+"/"+posY);
+		
+		feature.x=posX;
+		feature.y=posY;
+
+		// Merge in the default feature definition
+		var d=require('./../game/features/'+feature.type);
+		d.fullfile=global.settings.cdn+"features/"+d.file;
+		_.extend(feature,d);
+
+		delete feature.position;
+		delete feature.file;
+
+		feature.width=parseInt(feature.width);
+		feature.height=parseInt(feature.height);
+		feature.rotate=parseInt(feature.rotate);
+
+		// Add to the map
+		this.gridFeatures.push(feature);
+		this.mapAdd(posX,posY,"feature",feature);
+	};
+
+
 
 	// Add multiple creatures
 	this.addCreaturesByID=function(creatureIDArray) {
@@ -108,7 +154,7 @@ var grid=function(name) {
 	};
 
 	this.mapAdd=function(x,y,type,object) {
-		console.log(this.name+": Adding "+object.details.type+" to map: "+x+"/"+y);
+		console.log(this.name+": Adding "+type+" to map: "+x+"/"+y);
 		var cell=this.map[x-1][y-1];
 		if (!cell[type]) cell[type]=[];
 		cell[type].push(object);
