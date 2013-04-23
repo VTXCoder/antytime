@@ -1,23 +1,10 @@
 
-/*
-
-Squares are naturally 25px 25px at largest size.
-
-*/
-
 var gridObject=function() {
-	this.$g=$("#grid").disableSelection();
-	this.cmd=[];
-	this.processing=false;
+	this.$g=$("#grid");
 	this.data=null;
-	this.gridHoverX=null;
-	this.gridHoverY=null;
 	this.map=[];
 
-	for (var x=0;x<game.layout.cellCountX;x++) {
-		this.map[x]=[];for (var y=0;y<game.layout.cellCountY;y++) 
-			this.map[x][y]={};
-	}
+	
 	
 	this.snapshot=function(data) {
 		var self=this;
@@ -25,43 +12,26 @@ var gridObject=function() {
 		console.log("Snapshot Grid: "+this.data.name);
 		console.log(data);
 
+		// Initialise the layout
+		game.layout.init(this.data.size.split("x")[0],this.data.size.split("x")[1]);
+
+		// Reset the map
+		this.map=[];
+		for (var x=0;x<game.layout.cellCountX;x++) {
+			this.map[x]=[];for (var y=0;y<game.layout.cellCountY;y++) 
+				this.map[x][y]={};
+		}
+
 		// Default Terrain
 		if (this.data.defaultTerrain) {
 			for (var x=0;x<game.layout.cellCountX;x++) {
-				for (var y=0;y<game.layout.cellCountY;y++) 
+				for (var y=0;y<game.layout.cellCountY;y++) { 
 					this.map[x][y].terrain=this.data.defaultTerrain;
+				}
 			}
 		}
 
-		// Clear the grid
-		this.$g.html("");
-
-		this.$g.on("mousemove",function(e) {
-			var x=e.pageX-this.offsetLeft;
-			var y=e.pageY-this.offsetTop;
-			var prevX=self.gridHoverX;
-			var prevY=self.gridHoverY;
-			self.gridHoverX=parseInt(x/game.layout.cellSize)+1;
-			self.gridHoverY=parseInt(y/game.layout.cellSize)+1;
-			$('#position').html("CellPos: "+self.gridHoverX +"/"+ self.gridHoverY);
-			if (prevX!=self.gridHoverX || prevY!=self.gridHoverY) self.showHoverCell();
-		});
-
-		this.$g.on("mouseleave",function(e) {
-			self.gridHoverX=null;
-			self.gridHoverY=null;
-			$('#position').html("");
-			self.showHoverCell();
-		});
-
-		this.$g.on("click",function(e) {
-			e.stopPropagation();
-			self.click();
-
-		});
-
 		this.drawBackground();
-		//this.showGrid();
 
 		// Process the features
 		if (this.data.features) {
@@ -71,33 +41,18 @@ var gridObject=function() {
 		}
 
 		$(game).trigger("grid-initialised");
-		//game.server.getSnapshot();
 
 	};
 
-	this.click=function() {
-		console.log("Clicked at: "+this.gridHoverX+"/"+this.gridHoverY);
-		console.log(this.map[this.gridHoverX-1][this.gridHoverY-1]);
+	this.clicked=function(x,y) {
+		console.log("Clicked at: "+x+"/"+y);
+		console.log(this.map[x-1][y-1]);
 	};
 
 	this.disable=function() {
 		this.$g.append($("<div />",{"id":"gridDisableOverlay"})
 			.css({width:this.$g.width(),height:this.$g.height()}));
 	};
-
-	this.showHoverCell=function() {
-		var self=this;
-		if (self.gridHoverX && self.gridHoverY) {
-			this.$g.find(".hoverCell").remove();
-			var posX=(self.gridHoverX-1)*game.layout.cellSize;
-			var posY=(self.gridHoverY-1)*game.layout.cellSize;
-			//console.log(posX+"/"+posY);
-			var $h=$("<div />",{"class":"hoverCell"}).css({"width":game.layout.cellSize+1,"height":game.layout.cellSize+1,"top":posY,"left":posX});
-			this.$g.append($h);
-		} else {
-			this.$g.find(".hoverCell").remove();
-		}
-	}
 
 	this.drawBackground=function() {
 		// Scale the background to fit the grid
@@ -107,7 +62,7 @@ var gridObject=function() {
 	this.drawFeature=function(file,width,height,x,y,rotation) {
 		var posX=(x-1)*game.layout.cellSize;
 		var posY=(y-1)*game.layout.cellSize;
-		console.log("Drawing Feature "+file+" "+posX+"/"+posY);
+		console.log("Drawing Feature "+file);
 		var $feature=$("<img />",{"src":file,"class":"feature","width":(width*game.layout.scale),"height":(height*game.layout.scale)});
 		$feature.css({left:posX,top:posY}).rotate(parseInt(rotation));
 		this.$g.append($feature);

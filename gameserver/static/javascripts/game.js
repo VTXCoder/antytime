@@ -1,27 +1,4 @@
 
-/*
-
-game
-game.settings
-game.matrix
-game.server
-game.avatar
-
-Each command must increment from the last one... 
-
-If any are skipped then disconnect.
-
-Once a matrix is created then we need to... 
-
-reset to current state
-
-
-
-*/
-
-
-
-
 var game={};
 
 game.settings={
@@ -41,10 +18,6 @@ $(function() {
 	game.feature=new featureObject();
 
 	var gridName="DeadLeaves-1x1";
-
-	// Initialise the layout
-	game.layout.init();
-
 	game.server.connect("testkey123","staticvortex");
  
 	// When the server is connected request the grid data
@@ -62,20 +35,6 @@ $(function() {
 	$(game).on("access-failed",function() {
 		alert("ACCESS FAILED");
 	});
-
-	/*
-	$(game).on("grid-initialised",function() {
-		console.log("Grid Initialised");
-
-		game.server.initCreatures(function(data) {
-			_.each(data,function(creature) {
-				game.creature.create(creature);
-			});
-		});
-
-	});
-	*/
-
 });
 
 
@@ -93,33 +52,28 @@ var layoutObject=function() {
 	this.cellSize=0;
 	this.scale=1;
 
-	this.init=function() {
+	this.init=function(w,h) {
+
+		this.cellCountX=w || this.cellCountX;	
+		this.cellCountY=h || this.cellCountY;	
+
 		this.pageHeight=$(window).height()-20;
 		console.log("Page Height: "+this.pageHeight);
 
 		this.cellSize=this.perfectCellSize;
-
 		this.gridWidth=this.cellCountX*this.cellSize;
 		this.gridHeight=this.cellCountY*this.cellSize;
 
+		if (this.pageHeight<this.gridHeight) {
+			this.scale=this.pageHeight/this.gridHeight;
+		}
 
-		//if (this.pageHeight<this.gridSize) {
-		//	this.gridSize=this.pageHeight;
-		//}
-
-
-
-		// Make the grid size divisible by 20 
-		//this.gridWidth =parseInt(this.gridWidth/this.cellCountX)*this.cellCountX;
-		//this.gridHeight=parseInt(this.gridHeight/this.cellCountX)*this.cellCountY;
-
-		// Work out the cell size
-		//this.cellSize=this.gridSize/this.cellCountX;
-
-		// Work out the scaling
-		//this.scale=this.gridSize/this.perfectGridSize;
-
-
+		// Scale the grid
+		if (this.scale!=1) {
+			this.cellSize=this.perfectCellSize*this.scale;
+			this.gridWidth=this.cellCountX*this.cellSize;
+			this.gridHeight=this.cellCountY*this.cellSize;
+		}
 
 		console.log("Layout Cell Count: "+this.cellCountX+"/"+this.cellCountY);
 		console.log("Layout Grid Size: "+this.gridWidth+"/"+this.gridHeight);
@@ -127,11 +81,14 @@ var layoutObject=function() {
 		console.log("Layout Scale: "+parseInt(this.scale*100)+"%");
 
 		var $g=$("#grid");
-		$g.css({top:10,left:10,width:this.gridWidth,height:this.gridHeight});
-
-
 		var $p=$("#panel");
+
+		$g.css({top:10,left:10,width:this.gridWidth,height:this.gridHeight});
 		$p.css({left:this.gridWidth+20,width:300,height:this.gridHeight});
+
+		// Clear the grid
+		$g.html("");
+		$p.html("");
 	}
 
 

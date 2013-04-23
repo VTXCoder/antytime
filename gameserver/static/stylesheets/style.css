@@ -2,6 +2,7 @@
     padding:0;margin:0;
     overflow-y:scroll;
     max-width:1250px;
+    background-color:#000;
  }
 
 .left {float:left;}
